@@ -1,0 +1,16 @@
+<%- include('partials/head', { title }) %>
+<h1>Reset Password</h1>
+<form action="/reset/<%= token %>" method="post" class="auth-form">
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+  <% if (typeof errors !== 'undefined') { %>
+    <ul class="errors">
+      <% errors.forEach(e => { %>
+        <li><%= e.msg %></li>
+      <% }) %>
+    </ul>
+  <% } %>
+  <label>Password Baru</label>
+  <input type="password" name="password" required>
+  <button type="submit">Ubah Password</button>
+</form>
+<%- include('partials/footer') %>

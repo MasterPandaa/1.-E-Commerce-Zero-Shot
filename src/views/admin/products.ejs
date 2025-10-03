@@ -1,0 +1,29 @@
+<%- include('partials/head', { title }) %>
+<h1>Kelola Produk</h1>
+<p><a class="btn" href="/admin/products/new">+ Tambah Produk</a></p>
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID</th><th>Nama</th><th>Harga</th><th>Stok</th><th>Aktif</th><th>Aksi</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% products.forEach(p => { %>
+      <tr>
+        <td><%= p.id %></td>
+        <td><%= p.name %></td>
+        <td>Rp <%= Number(p.price).toLocaleString('id-ID') %></td>
+        <td><%= p.stock %></td>
+        <td><%= p.is_active ? 'Ya' : 'Tidak' %></td>
+        <td>
+          <a href="/admin/products/<%= p.id %>/edit">Edit</a>
+          <form action="/admin/products/<%= p.id %>/delete" method="post" style="display:inline" onsubmit="return confirm('Nonaktifkan produk ini?')">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <button type="submit" class="linklike">Nonaktifkan</button>
+          </form>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
+<%- include('partials/footer') %>

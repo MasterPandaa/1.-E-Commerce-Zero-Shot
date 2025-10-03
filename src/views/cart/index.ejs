@@ -1,0 +1,46 @@
+<%- include('partials/head', { title }) %>
+<h1>Keranjang</h1>
+<% if (!items.length) { %>
+  <p>Keranjang kosong.</p>
+<% } else { %>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Produk</th><th>Harga</th><th>Jumlah</th><th>Subtotal</th><th>Aksi</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% items.forEach(it => { %>
+        <tr>
+          <td>
+            <img class="thumb" src="/<%= it.image_url || 'public/img/placeholder.svg' %>" alt="<%= it.name %>">
+            <%= it.name %>
+          </td>
+          <td>Rp <%= Number(it.unit_price).toLocaleString('id-ID') %></td>
+          <td>
+            <form action="/cart/update" method="post" class="inline">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+              <input type="hidden" name="product_id" value="<%= it.product_id %>">
+              <input type="number" name="quantity" min="0" max="<%= it.stock %>" value="<%= it.quantity %>">
+              <button type="submit">Ubah</button>
+            </form>
+          </td>
+          <td>Rp <%= Number(it.subtotal).toLocaleString('id-ID') %></td>
+          <td>
+            <form action="/cart/remove" method="post" class="inline" onsubmit="return confirm('Hapus item ini?')">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+              <input type="hidden" name="product_id" value="<%= it.product_id %>">
+              <button type="submit" class="linklike">Hapus</button>
+            </form>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+  <div class="totals">
+    <div>Subtotal: Rp <%= Number(totals.subtotal).toLocaleString('id-ID') %></div>
+    <div>Total: Rp <%= Number(totals.total).toLocaleString('id-ID') %></div>
+  </div>
+  <p><a class="btn" href="/checkout">Lanjut ke Checkout</a></p>
+<% } %>
+<%- include('partials/footer') %>

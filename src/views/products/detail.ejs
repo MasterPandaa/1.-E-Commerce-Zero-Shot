@@ -1,0 +1,17 @@
+<%- include('partials/head', { title }) %>
+<div class="product-detail">
+  <img src="/<%= product.image_url || 'public/img/placeholder.svg' %>" alt="<%= product.name %>">
+  <div>
+    <h1><%= product.name %></h1>
+    <div class="price">Rp <%= Number(product.price).toLocaleString('id-ID') %></div>
+    <p><%= product.description || '' %></p>
+    <p>Stok: <%= product.stock %></p>
+    <form action="/cart/add" method="post">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <input type="hidden" name="product_id" value="<%= product.id %>">
+      <input type="number" name="quantity" value="1" min="1" max="<%= product.stock %>">
+      <button type="submit" <%= product.stock <= 0 ? 'disabled' : '' %>>Tambah ke Keranjang</button>
+    </form>
+  </div>
+</div>
+<%- include('partials/footer') %>

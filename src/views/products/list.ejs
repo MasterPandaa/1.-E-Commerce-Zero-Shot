@@ -1,0 +1,31 @@
+<%- include('partials/head', { title }) %>
+<h1>Daftar Produk</h1>
+<form class="filters" method="get" action="/products">
+  <input type="text" name="q" placeholder="Cari nama" value="<%= query.q || '' %>">
+  <input type="text" name="category" placeholder="Kategori" value="<%= query.category || '' %>">
+  <input type="number" step="0.01" name="minPrice" placeholder="Harga min" value="<%= query.minPrice || '' %>">
+  <input type="number" step="0.01" name="maxPrice" placeholder="Harga maks" value="<%= query.maxPrice || '' %>">
+  <button type="submit">Filter</button>
+</form>
+<div class="grid">
+  <% if (products && products.length) { %>
+    <% products.forEach(p => { %>
+      <div class="card">
+        <a href="/products/<%= p.id %>">
+          <img src="/<%= p.image_url || 'public/img/placeholder.svg' %>" alt="<%= p.name %>" />
+          <h3><%= p.name %></h3>
+        </a>
+        <div class="price">Rp <%= Number(p.price).toLocaleString('id-ID') %></div>
+        <form action="/cart/add" method="post">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <input type="hidden" name="product_id" value="<%= p.id %>">
+          <input type="hidden" name="quantity" value="1">
+          <button type="submit">Tambah ke Keranjang</button>
+        </form>
+      </div>
+    <% }) %>
+  <% } else { %>
+    <p>Tidak ada produk yang cocok.</p>
+  <% } %>
+</div>
+<%- include('partials/footer') %>

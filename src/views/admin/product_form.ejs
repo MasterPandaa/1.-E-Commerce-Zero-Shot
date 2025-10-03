@@ -1,0 +1,36 @@
+<%- include('partials/head', { title }) %>
+<h1><%= product ? 'Edit' : 'Tambah' %> Produk</h1>
+<% if (typeof errors !== 'undefined') { %>
+  <ul class="errors">
+    <% errors.forEach(e => { %>
+      <li><%= e.msg %></li>
+    <% }) %>
+  </ul>
+<% } %>
+<form action="<%= product ? '/admin/products/' + product.id + '/edit' : '/admin/products/new' %>" method="post" enctype="multipart/form-data" class="product-form">
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+  <% if (product && product.image_url) { %>
+    <input type="hidden" name="existing_image_url" value="<%= product.image_url %>">
+  <% } %>
+  <label>Nama</label>
+  <input type="text" name="name" value="<%= product ? product.name : '' %>" required>
+  <label>Deskripsi</label>
+  <textarea name="description"><%= product ? product.description : '' %></textarea>
+  <label>Harga</label>
+  <input type="number" step="0.01" name="price" value="<%= product ? product.price : '' %>" required>
+  <label>Stok</label>
+  <input type="number" name="stock" value="<%= product ? product.stock : 0 %>" required>
+  <label>Kategori</label>
+  <input type="text" name="category" value="<%= product ? product.category : '' %>">
+  <label>Gambar</label>
+  <input type="file" name="image" accept="image/*">
+  <% if (product) { %>
+    <label>Aktif</label>
+    <select name="is_active">
+      <option value="1" <%= product.is_active ? 'selected' : '' %>>Ya</option>
+      <option value="0" <%= !product.is_active ? 'selected' : '' %>>Tidak</option>
+    </select>
+  <% } %>
+  <button type="submit"><%= product ? 'Simpan' : 'Tambah' %></button>
+</form>
+<%- include('partials/footer') %>

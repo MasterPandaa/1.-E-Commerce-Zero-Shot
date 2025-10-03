@@ -1,0 +1,19 @@
+<%- include('partials/head', { title }) %>
+<h1>Lupa Password</h1>
+<form action="/forgot" method="post" class="auth-form">
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+  <% if (typeof errors !== 'undefined') { %>
+    <ul class="errors">
+      <% errors.forEach(e => { %>
+        <li><%= e.msg %></li>
+      <% }) %>
+    </ul>
+  <% } %>
+  <% if (typeof info !== 'undefined') { %>
+    <div class="info"><%= info %></div>
+  <% } %>
+  <label>Email</label>
+  <input type="email" name="email" required>
+  <button type="submit">Kirim Tautan Reset</button>
+</form>
+<%- include('partials/footer') %>

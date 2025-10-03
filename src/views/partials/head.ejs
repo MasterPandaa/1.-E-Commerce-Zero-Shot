@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title %> - E-Commerce</title>
+  <link rel="stylesheet" href="/public/css/style.css" />
+</head>
+<body>
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a class="brand" href="/">E-Commerce</a>
+      <nav>
+        <a href="/products">Produk</a>
+        <a href="/cart">Keranjang</a>
+        <% if (user && user.role === 'admin') { %>
+          <a href="/admin">Admin</a>
+          <a href="/admin/products">Kelola Produk</a>
+        <% } %>
+      </nav>
+      <div class="auth">
+        <% if (user) { %>
+          <span>Hai, <%= user.name %></span>
+          <form id="logoutForm" action="/logout" method="post" style="display:inline;">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <button type="submit" class="linklike">Logout</button>
+          </form>
+        <% } else { %>
+          <a href="/login">Login</a>
+          <a href="/register">Daftar</a>
+        <% } %>
+      </div>
+    </div>
+  </header>
+  <main class="container">
+    <% if (flash) { %>
+      <div class="flash <%= flash.type %>"><%= flash.message %></div>
+    <% } %>

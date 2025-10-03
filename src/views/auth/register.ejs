@@ -1,0 +1,20 @@
+<%- include('partials/head', { title }) %>
+<h1>Daftar</h1>
+<form action="/register" method="post" class="auth-form">
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+  <% if (typeof errors !== 'undefined') { %>
+    <ul class="errors">
+      <% errors.forEach(e => { %>
+        <li><%= e.msg %></li>
+      <% }) %>
+    </ul>
+  <% } %>
+  <label>Nama</label>
+  <input type="text" name="name" required>
+  <label>Email</label>
+  <input type="email" name="email" required>
+  <label>Password</label>
+  <input type="password" name="password" required>
+  <button type="submit">Daftar</button>
+</form>
+<%- include('partials/footer') %>

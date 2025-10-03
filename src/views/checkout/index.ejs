@@ -1,0 +1,37 @@
+<%- include('partials/head', { title }) %>
+<h1>Checkout</h1>
+<div class="checkout">
+  <div class="order-summary">
+    <h2>Ringkasan</h2>
+    <ul>
+      <% items.forEach(it => { %>
+        <li><%= it.name %> x <%= it.quantity %> — Rp <%= Number(it.subtotal).toLocaleString('id-ID') %></li>
+      <% }) %>
+    </ul>
+    <p><strong>Total: Rp <%= Number(totals.total).toLocaleString('id-ID') %></strong></p>
+  </div>
+  <div class="address-form">
+    <h2>Alamat & Pembayaran</h2>
+    <form action="/checkout" method="post">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <label for="address">Alamat</label>
+      <input id="address" type="text" name="address" required>
+      <label for="city">Kota</label>
+      <input id="city" type="text" name="city" required>
+      <label for="postal_code">Kode Pos</label>
+      <input id="postal_code" type="text" name="postal_code" required>
+      <label for="country">Negara</label>
+      <input id="country" type="text" name="country" required>
+      <label for="phone">Telepon</label>
+      <input id="phone" type="text" name="phone" required>
+
+      <fieldset>
+        <legend>Metode Pembayaran</legend>
+        <label for="pm-cod"><input id="pm-cod" type="radio" name="payment_method" value="cod" checked> Bayar di tempat (COD)</label>
+      </fieldset>
+
+      <button type="submit">Buat Pesanan</button>
+    </form>
+  </div>
+</div>
+<%- include('partials/footer') %>
