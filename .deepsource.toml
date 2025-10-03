@@ -7,4 +7,28 @@ name = "sql"
 name = "javascript"
 
   [analyzers.meta]
-  environment = ["nodejs"]
+  plugins = [
+    "angularjs",
+    "meteor",
+    "ember",
+    "vue",
+    "react",
+    "angular"
+  ]
+  environment = [
+    "nodejs",
+    "browser",
+    "jest",
+    "mocha",
+    "jasmine",
+    "vitest",
+    "cypress",
+    "mongo",
+    "jquery"
+  ]
+
+[[transformers]]
+name = "prettier"
+
+[[transformers]]
+name = "standardjs"
