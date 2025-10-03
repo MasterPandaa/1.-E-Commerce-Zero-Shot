@@ -1,12 +1,12 @@
-const mysql = require('mysql2/promise');
-require('dotenv').config();
+const mysql = require("mysql2/promise");
+require("dotenv").config();
 
 const {
-  DB_HOST = '127.0.0.1',
-  DB_PORT = '3306',
-  DB_USER = 'root',
-  DB_PASSWORD = '',
-  DB_NAME = 'ecommerce'
+  DB_HOST = "127.0.0.1",
+  DB_PORT = "3306",
+  DB_USER = "root",
+  DB_PASSWORD = "",
+  DB_NAME = "ecommerce",
 } = process.env;
 
 const pool = mysql.createPool({
@@ -17,7 +17,7 @@ const pool = mysql.createPool({
   database: DB_NAME,
   connectionLimit: 10,
   waitForConnections: true,
-  namedPlaceholders: true
+  namedPlaceholders: true,
 });
 
 module.exports = pool;
